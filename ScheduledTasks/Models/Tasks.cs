@@ -66,6 +66,8 @@ namespace ScheduledTasks.Models
             set { _startdate = value; }
         }
 
+        public long GroupId { get; set; }
+
         public static void InsertScheduleTask(string responderid, string assignname, string assigneeemail, string description, string summary, DateTime startDate, DateTime endDate)
         {
             string sqlconnect = System.Configuration.ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;

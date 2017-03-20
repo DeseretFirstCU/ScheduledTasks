@@ -32,6 +32,7 @@ namespace ScheduledTasks
             task.Summary = txtSummary.Text;
             task.StartDate = Convert.ToDateTime(txtStartDate.Text);
             task.EndDate = Convert.ToDateTime(txtEndDate.Text);
+            task.GroupId = 5000094725;
 
             //Get agent
             string test = String.Empty;
@@ -62,7 +63,7 @@ namespace ScheduledTasks
             try
             {                
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                string createJson = "{\"helpdesk_ticket\": {\"email\":\"" + task.AssigneeEmail + "\",\"subject\":\"" + task.Description + "\",\"description\":\"" + task.Summary + "\",\"responder_id\":\"" + id + "\"}}";
+                string createJson = "{\"helpdesk_ticket\": {\"email\":\"" + task.AssigneeEmail + "\",\"subject\":\"" + task.Description + "\",\"description\":\"" + task.Summary + "\",\"responder_id\":\"" + id + "\", \"group_id\":\"" + task.GroupId + "\"}}";
                 HttpWebRequest createRequest = (HttpWebRequest)WebRequest.Create("https://dfcu.freshdesk.com/helpdesk/tickets.json");
                 //HttpWebRequest class is used to Make a request to a Uniform Resource Identifier (URI).  
                 createRequest.ContentType = "application/json";
