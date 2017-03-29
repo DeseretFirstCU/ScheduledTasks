@@ -7,15 +7,41 @@
 <head runat="server">
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"/>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/custom.css" rel="stylesheet" />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
         function fillEndDate() {
             var text2 = $get("txtEndDate");
             var text1 = $get("txtStartDate");
             text2.value = text1.value;
         }
+
+        $(function () {
+            $("#txtAsignee").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "Default.aspx/GetEmployeeName",
+                        data: JSON.stringify({ "name": $("#txtAsignee").val()}),
+                        dataType: "json",
+                        success: function (data) {
+                            response(data.d);
+                        },
+                        error: function (result) {
+                            alert("No Match");
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    $('#userId').val(ui.item.ID);
+                }
+            });
+        });
     </script>
 
 </head>
@@ -62,14 +88,9 @@
                         <div class="col-md-6">
                             <p>
                                 <label>Assignee</label>
-                                <asp:TextBox ID="txtAsignee" runat="server" class="form-control" placeholder="Asignee"></asp:TextBox>
+                                <asp:TextBox ID="txtAsignee" runat="server" class="form-control" placeholder="Asignee" AutoPostBack="true"></asp:TextBox>
+                                <asp:HiddenField runat="server" ID="userId" />
                             </p>
-
-                            <p>
-                                <label>Assignee Email</label>
-                                <asp:TextBox ID="txtAssigneeEmail" runat="server" class="form-control" placeholder="Asignee Email"></asp:TextBox>
-                            </p>
-
                             <p>
                                 <label>Description/Task</label>
                                 <asp:TextBox ID="txtDesciption" runat="server" class="form-control" placeholder="Description"></asp:TextBox>
@@ -121,9 +142,5 @@
         <!-- Footer -->
 
     </form>
-
-    <script src="scripts/jquery-1.9.1.min.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>    
-
 </body>
 </html>

@@ -10,6 +10,15 @@ using System.Web.Configuration;
 using System.Net.Configuration;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Web.Services;
+using System.Collections.Generic;
+using ScheduledTasks.Properties;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web.Script.Services;
+using System.Linq;
 
 namespace ScheduledTasks
 {
@@ -22,24 +31,55 @@ namespace ScheduledTasks
 
             }
         }
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static object GetEmployeeName(string name)
+        {
+            Dictionary<long,string> employees= new Dictionary<long, string>();
+            string jsonString = null;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            var query = Settings.Default.SearchFreshDeskAgents+name;
+            HttpWebRequest agentRequest = (HttpWebRequest)WebRequest.Create(query);
+            agentRequest.ContentType = "application/json;charset=utf-8";
+            agentRequest.Method = "GET";
 
+
+            string createAuthInfo = "qnAp7P6hGpSTtFYYmvX:X";
+            createAuthInfo = Convert.ToBase64String(Encoding.Default.GetBytes(createAuthInfo));
+            agentRequest.Headers["Authorization"] = "Basic " + createAuthInfo;
+
+            using (HttpWebResponse agentResponse = (HttpWebResponse)agentRequest.GetResponse())
+            {
+                Stream agentDataStream = agentResponse.GetResponseStream();
+                StreamReader agentReader = new StreamReader(agentDataStream);
+                jsonString = agentReader.ReadToEnd();
+                agentReader.Close();
+                agentDataStream.Close();
+            }
+            var searchEmployees = JsonConvert.DeserializeObject<List<RootObject>>(jsonString);
+           foreach(var employee in searchEmployees)
+            {
+                employees.Add(employee.agent.id, employee.agent.user.name);
+            }
+            var results = employees.Select(c => new { label = c.Value, ID = c.Key });
+            return results;
+        }
         protected void btnSchedule_Click(object sender, EventArgs e)
         {
             Tasks task = new Tasks();
             task.AssigneeName = txtAsignee.Text;
-            task.AssigneeEmail = txtAssigneeEmail.Text;
             task.Description = txtDesciption.Text;
             task.Summary = txtSummary.Text;
             task.StartDate = Convert.ToDateTime(txtStartDate.Text);
             task.EndDate = Convert.ToDateTime(txtEndDate.Text);
             task.GroupId = 5000094725;
-
+            var id = Convert.ToInt64(userId.Value);
+            var email = HttpContext.Current.User.Identity.Name.Replace("DFCU\\","")+"@dfcu.com";
             //Get agent
-            string test = String.Empty;
+            string jsonString = String.Empty;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            var url = "https://dfcu.freshdesk.com/agents.json";
-            var query = url + "?query=email is " + task.AssigneeEmail;
-            HttpWebRequest agentRequest = (HttpWebRequest)WebRequest.Create(query);
+            var url = "https://dfcu.freshdesk.com/agents/" + id + ".json";
+            HttpWebRequest agentRequest = (HttpWebRequest)WebRequest.Create(url);
             agentRequest.ContentType = "application/json";
             agentRequest.Method = "GET";
 
@@ -51,19 +91,18 @@ namespace ScheduledTasks
             {
                 Stream agentDataStream = agentResponse.GetResponseStream();
                 StreamReader agentReader = new StreamReader(agentDataStream);
-                test = agentReader.ReadToEnd();
+                jsonString = agentReader.ReadToEnd();
                 agentReader.Close();
                 agentDataStream.Close();
             }
-
-            JArray results = JArray.Parse(test);
-            string id = results[0]["agent"]["user_id"].ToString();
-
+            var results = JsonConvert.DeserializeObject<RootObject>(jsonString);
+            task.AssigneeEmail = results.agent.user.email;
+            var responderId = results.agent.user.id;
             //Create the ticket
             try
             {                
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                string createJson = "{\"helpdesk_ticket\": {\"email\":\"" + task.AssigneeEmail + "\",\"subject\":\"" + task.Description + "\",\"description\":\"" + task.Summary + "\",\"responder_id\":\"" + id + "\", \"group_id\":\"" + task.GroupId + "\"}}";
+                string createJson = "{\"helpdesk_ticket\": {\"email\":\"" + email + "\",\"subject\":\"" + task.Description + "\",\"description\":\"" + task.Summary + "\",\"responder_id\":\"" + responderId + "\", \"group_id\":\"" + task.GroupId + "\"}}";
                 HttpWebRequest createRequest = (HttpWebRequest)WebRequest.Create("https://dfcu.freshdesk.com/helpdesk/tickets.json");
                 //HttpWebRequest class is used to Make a request to a Uniform Resource Identifier (URI).  
                 createRequest.ContentType = "application/json";
@@ -92,14 +131,13 @@ namespace ScheduledTasks
                 // Read the content. 
                 string createResult = createReader.ReadToEnd();
 
-                Tasks.InsertScheduleTask(id, task.AssigneeName, task.AssigneeEmail, task.Description, task.Summary, task.StartDate, task.EndDate);
+                Tasks.InsertScheduleTask(id.ToString(), task.AssigneeName, task.AssigneeEmail, task.Description, task.Summary, task.StartDate, task.EndDate);
                 AddToCalendar(task);
 
                 lblResponseSuccess.Visible = true;
                 lblResponeFail.Visible = false;
 
                 txtAsignee.Text = "";
-                txtAssigneeEmail.Text = "";
                 txtDesciption.Text = "";
                 txtSummary.Text = "";
                 txtStartDate.Text = "";
@@ -167,7 +205,6 @@ namespace ScheduledTasks
         protected void btnClear_Click(object sender, EventArgs e)
         {
             txtAsignee.Text = "";
-            txtAssigneeEmail.Text = "";
             txtDesciption.Text = "";
             txtSummary.Text = "";
             txtStartDate.Text = "";

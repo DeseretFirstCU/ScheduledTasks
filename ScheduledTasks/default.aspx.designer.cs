@@ -49,13 +49,13 @@ namespace ScheduledTasks {
         protected global::System.Web.UI.WebControls.TextBox txtAsignee;
         
         /// <summary>
-        /// txtAssigneeEmail control.
+        /// userId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAssigneeEmail;
+        protected global::System.Web.UI.WebControls.HiddenField userId;
         
         /// <summary>
         /// txtDesciption control.
