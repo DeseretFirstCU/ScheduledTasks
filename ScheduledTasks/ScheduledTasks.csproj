@@ -149,6 +149,8 @@
     <Content Include="bin\System.Web.Http.WebHost.dll" />
     <Content Include="bin\System.Web.Http.WebHost.xml" />
     <Content Include="bin\System.Web.Http.xml" />
+    <Content Include="calendar.aspx" />
+    <Content Include="images\DFCUTeamNet.png" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -278,6 +280,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="calendar.aspx.cs">
+      <DependentUpon>calendar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="calendar.aspx.designer.cs">
+      <DependentUpon>calendar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

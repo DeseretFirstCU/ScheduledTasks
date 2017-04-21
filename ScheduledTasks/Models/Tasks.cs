@@ -9,7 +9,9 @@ using System.Data;
 namespace ScheduledTasks.Models
 {
     public class Tasks
-    {    
+    {
+        string sqlconnect = System.Configuration.ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+
         private int _taskid;
         private int _responderid;
         private string _assigneename;
@@ -99,6 +101,35 @@ namespace ScheduledTasks.Models
             {
                 sqlConnection.Close();
             }
+        }
+
+        public DataTable GetScheduledTasks()
+        {
+            DataTable dt = new DataTable();
+
+            string sqlselect = "SELECT * FROM Tasks";
+            SqlConnection sqlConnection = new SqlConnection(sqlconnect);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand(sqlselect, sqlConnection);
+                SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCommand);
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                dt = new DataTable();
+                dt.Load(sqlDataReader);
+            }
+            catch (Exception)
+            {
+                sqlConnection.Close();
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return dt;
         }
     }
 }

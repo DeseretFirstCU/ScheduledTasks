@@ -13,7 +13,7 @@ p {
 }
   
 .navbar-custom .navbar-nav > li > a {
-  	color:#042D89;
+  	color:white;
     font-size:16px;
 }
 .navbar-custom .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
@@ -54,4 +54,27 @@ p {
     .label-repeater {
         font-size:12px;
     } 
+}
+
+.calTodayDay {
+    color:#042D89;
+    padding-left:5px;
+    padding-top:5px;
+}
+
+.calNextPrevHeader {
+    padding-left:10px;
+    padding-right:10px;
+    color:white;
+    font-size:10px;
+}
+
+.gridCell{
+    padding-left:5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.calRounded {
+    border-radius:25px;
 }

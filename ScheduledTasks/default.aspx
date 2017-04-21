@@ -55,8 +55,9 @@
                 <div class="pull-left"> 
                     <img src="images/DFCUTeamNet.png" class="img-responsive" />
                 </div>
-                <div class="navbar-collapse collapse">
-                    
+                <div class="nav navbar-nav navbar-collapse collapse navbar-right" style="padding-top:50px; padding-right:100px;">
+                    <li><a runat="server" href="Default.aspx">Home</a></li>
+                    <li><a runat="server" href="calendar.aspx">View Calendar</a></li>                        
                 </div>
             </div>
         </nav>
@@ -136,7 +137,12 @@
         <!-- Footer -->
         <footer>
             <div class="container">
-                
+                <div class="pull-left"> 
+                    <img src="images/DFCU_White_Small.jpg" />
+                </div>
+                <div class="pull-right">
+                    <%: DateTime.Now.Year %> - Deseret First Credit Union
+                </div>
             </div>
         </footer>
         <!-- Footer -->
