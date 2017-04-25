@@ -14,6 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="Content/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -88,11 +89,12 @@
                                 <asp:GridView ID="GridView1" runat="server" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" 
                                         BorderWidth="1px" CellPadding="4" CellSpacing="2" ForeColor="Black" AutoGenerateColumns="False" 
                                         Width="100%" CssClass="table table-striped table-bordered table-hover">
-                                    <Columns>
+                                    <Columns> 
+                                        <asp:HyperLinkField Text="<i class='fa fa-binoculars fa-lg' aria-hidden='true'></i>" DataNavigateUrlFields="TaskID" DataNavigateUrlFormatString="~/summary.aspx?TaskID={0}" ItemStyle-Width="5%" ItemStyle-HorizontalAlign="center" />                                                                               
                                         <asp:BoundField DataField="StartDate" HeaderText="Start Date" ItemStyle-Width="11%" DataFormatString="{0:MM/dd/yyyy}" />
                                         <asp:BoundField DataField="EndDate" HeaderText="End Date" ItemStyle-Width="11%" DataFormatString="{0:MM/dd/yyyy}" />
-                                        <asp:BoundField DataField="AssigneeName" HeaderText="Name" ItemStyle-Width="15%"  />
-                                        <asp:BoundField DataField="Summary" HeaderText="Summary" ItemStyle-Width="61%"  />                                        
+                                        <asp:BoundField DataField="AssigneeName" HeaderText="Name" ItemStyle-Width="15%"  />                                             
+                                        <asp:BoundField DataField="Description" HeaderText="Description" ItemStyle-Width="56%"  />                                        
                                     </Columns>
                                               
                                     <FooterStyle BackColor="#CCCCCC" />

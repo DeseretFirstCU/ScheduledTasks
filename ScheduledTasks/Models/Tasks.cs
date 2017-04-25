@@ -70,6 +70,62 @@ namespace ScheduledTasks.Models
 
         public long GroupId { get; set; }
 
+        public Tasks()
+        {
+
+        }
+
+        public Tasks(int taskid)
+        {
+            Tasks task = GetTaks(taskid);
+            this.TaskID = task.TaskID;
+            //this.ResponderID = task.ResponderID;
+            this.AssigneeName = task.AssigneeName;
+            this.AssigneeEmail = task.AssigneeEmail;
+            this.Description = task.Description;
+            this.Summary = task.Summary;
+            this.StartDate = task.StartDate;
+            this.EndDate = task.EndDate;
+        }
+
+        private Tasks GetTaks(int taskid)
+        {
+            Tasks task = new Tasks();
+
+            string sqlSelect = "SELECT * FROM Tasks WHERE TaskID = " + taskid;
+
+            SqlConnection conn = new SqlConnection(sqlconnect);
+
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlSelect, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    task.TaskID = reader.GetInt32(reader.GetOrdinal("TaskID"));
+                    //task.ResponderID = Convert.ToInt32(reader.GetString(reader.GetOrdinal("ResponderID")));
+                    task.AssigneeName = reader.GetString(reader.GetOrdinal("AssigneeName"));
+                    task.AssigneeEmail = reader.GetString(reader.GetOrdinal("AssigneeEmail"));
+                    task.Description = reader.GetString(reader.GetOrdinal("Description"));
+                    task.Summary = reader.GetString(reader.GetOrdinal("Summary"));
+                    task.StartDate = reader.GetDateTime(reader.GetOrdinal("StartDate"));
+                    task.EndDate = reader.GetDateTime(reader.GetOrdinal("EndDate"));
+                }
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return task;
+        }
+
         public static void InsertScheduleTask(string responderid, string assignname, string assigneeemail, string description, string summary, DateTime startDate, DateTime endDate)
         {
             string sqlconnect = System.Configuration.ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;

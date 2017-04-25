@@ -78,3 +78,7 @@ p {
 .calRounded {
     border-radius:25px;
 }
+
+.font-awsome-icon {
+    <i class="fa fa-eye" aria-hidden="true"></i>
+}

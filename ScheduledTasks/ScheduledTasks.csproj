@@ -150,6 +150,9 @@
     <Content Include="bin\System.Web.Http.WebHost.xml" />
     <Content Include="bin\System.Web.Http.xml" />
     <Content Include="calendar.aspx" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="images\DFCUTeamNet.png" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
@@ -163,6 +166,11 @@
     <Content Include="bin\ScheduledTasks.dll.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -275,6 +283,7 @@
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\jquery-1.9.1.js" />
     <Content Include="scripts\jquery-1.9.1.min.js" />
+    <Content Include="summary.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -304,6 +313,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="summary.aspx.cs">
+      <DependentUpon>summary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="summary.aspx.designer.cs">
+      <DependentUpon>summary.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

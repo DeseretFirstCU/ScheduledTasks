@@ -1,4 +1,0 @@
-﻿1>------ Build started: Project: ScheduledTasks, Configuration: Debug Any CPU ------
-1>D:\Projects\ScheduleTasks\ScheduledTasks\default.aspx.cs(146,36,146,38): warning CS0168: The variable 'ex' is declared but never used
-1>  ScheduledTasks -> D:\Projects\ScheduleTasks\ScheduledTasks\bin\ScheduledTasks.dll
-========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
