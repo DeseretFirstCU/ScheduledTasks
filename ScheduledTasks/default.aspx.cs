@@ -1,24 +1,20 @@
-﻿using ScheduledTasks.Models;
+﻿using Newtonsoft.Json;
+using ScheduledTasks.Models;
+using ScheduledTasks.Properties;
 using System;
-using System.Web;
-using System.Net;
-using System.IO;
-using System.Text;
-using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Web.Configuration;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Configuration;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Web.Services;
-using System.Collections.Generic;
-using ScheduledTasks.Properties;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+using System.Text;
+using System.Web;
+using System.Web.Configuration;
 using System.Web.Script.Services;
-using System.Linq;
+using System.Web.Services;
 
 namespace ScheduledTasks
 {
@@ -69,9 +65,13 @@ namespace ScheduledTasks
             Tasks task = new Tasks();
             task.AssigneeName = txtAsignee.Text;
             task.Description = txtDesciption.Text;
-            task.Summary = txtSummary.Text;
-            task.StartDate = Convert.ToDateTime(txtStartDate.Text);
-            task.EndDate = Convert.ToDateTime(txtEndDate.Text);
+            task.Summary = txtSummary.Text;            
+            DateTime sDate = Convert.ToDateTime(txtStartDate.Text);
+            DateTime sTime = Convert.ToDateTime(txtStartTime.Text);
+            task.StartDate = sDate.Date.Add(sTime.TimeOfDay);
+            DateTime eDate = Convert.ToDateTime(txtEndDate.Text);
+            DateTime eTime = Convert.ToDateTime(txtEndTime.Text);
+            task.EndDate = eDate.Date.Add(eTime.TimeOfDay);
             task.GroupId = 5000094725;
             var id = Convert.ToInt64(userId.Value);
             var email = HttpContext.Current.User.Identity.Name.Replace("DFCU\\","")+"@dfcu.com";
@@ -100,7 +100,7 @@ namespace ScheduledTasks
             var responderId = results.agent.user.id;
             //Create the ticket
             try
-            {                
+            {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 string createJson = "{\"helpdesk_ticket\": {\"email\":\"" + email + "\",\"subject\":\"" + task.Description + "\",\"description\":\"" + task.Summary + "\",\"responder_id\":\"" + responderId + "\", \"group_id\":\"" + task.GroupId + "\"}}";
                 HttpWebRequest createRequest = (HttpWebRequest)WebRequest.Create("https://dfcu.freshdesk.com/helpdesk/tickets.json");
@@ -131,7 +131,7 @@ namespace ScheduledTasks
                 // Read the content. 
                 string createResult = createReader.ReadToEnd();
 
-                Tasks.InsertScheduleTask(id.ToString(), task.AssigneeName, task.AssigneeEmail, task.Description, task.Summary, task.StartDate, task.EndDate);
+                Tasks.InsertScheduleTask(id.ToString(), task);
                 AddToCalendar(task);
 
                 lblResponseSuccess.Visible = true;

@@ -94,6 +94,15 @@ namespace ScheduledTasks {
         protected global::AjaxControlToolkit.CalendarExtender txtStartDate_CalendarExtender;
         
         /// <summary>
+        /// txtStartTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStartTime;
+        
+        /// <summary>
         /// txtEndDate control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace ScheduledTasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtEndDate_CalendarExtender;
+        
+        /// <summary>
+        /// txtEndTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEndTime;
         
         /// <summary>
         /// btnClear control.

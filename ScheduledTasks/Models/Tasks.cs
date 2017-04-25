@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace ScheduledTasks.Models
 {
@@ -19,13 +15,7 @@ namespace ScheduledTasks.Models
         private string _description; 
         private string _summary;
         private DateTime _startdate;
-        private DateTime _enddate;
-
-        public DateTime EndDate
-        {
-            get { return _enddate; }
-            set { _enddate = value; }
-        }
+        private DateTime _enddate;     
 
         public int TaskID
         {
@@ -66,6 +56,12 @@ namespace ScheduledTasks.Models
         {
             get { return _startdate; }
             set { _startdate = value; }
+        }
+
+        public DateTime EndDate
+        {
+            get { return _enddate; }
+            set { _enddate = value; }
         }
 
         public long GroupId { get; set; }
@@ -126,12 +122,14 @@ namespace ScheduledTasks.Models
             return task;
         }
 
-        public static void InsertScheduleTask(string responderid, string assignname, string assigneeemail, string description, string summary, DateTime startDate, DateTime endDate)
+        public static void InsertScheduleTask(string id, Tasks task)
         {
             string sqlconnect = System.Configuration.ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 
-            string sqlInsert = "INSERT INTO Tasks(ResponderID, AssigneeName, AssigneeEmail, Description, Summary, StartDate, EndDate)" +
-                               "VALUES(@ResponderID, @AssigneeName, @AssigneeEmail, @Description, @Summary, @StartDate, @EndDate)";
+            string sqlInsert = "INSERT INTO Tasks(ResponderID, AssigneeName, AssigneeEmail, " +
+                               "Description, Summary, StartDate, EndDate)" +
+                               "VALUES(@ResponderID, @AssigneeName, @AssigneeEmail, @Description, " +
+                               "@Summary, @StartDate, @EndDate)";
 
             SqlConnection sqlConnection = new SqlConnection(sqlconnect);
 
@@ -139,13 +137,13 @@ namespace ScheduledTasks.Models
             {
                 sqlConnection.Open();
                 SqlCommand cmd = new SqlCommand(sqlInsert, sqlConnection);
-                cmd.Parameters.AddWithValue("@ResponderID", responderid);
-                cmd.Parameters.AddWithValue("@AssigneeName", assignname);
-                cmd.Parameters.AddWithValue("@AssigneeEmail", assigneeemail);
-                cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Summary", summary);
-                cmd.Parameters.AddWithValue("@StartDate", startDate);
-                cmd.Parameters.AddWithValue("@EndDate", endDate);
+                cmd.Parameters.AddWithValue("@ResponderID", task.ResponderID);
+                cmd.Parameters.AddWithValue("@AssigneeName", task.AssigneeName);
+                cmd.Parameters.AddWithValue("@AssigneeEmail", task.AssigneeEmail);
+                cmd.Parameters.AddWithValue("@Description", task.Description);
+                cmd.Parameters.AddWithValue("@Summary", task.Summary);
+                cmd.Parameters.AddWithValue("@StartDate", task.StartDate);
+                cmd.Parameters.AddWithValue("@EndDate", task.EndDate);
                 cmd.ExecuteNonQuery();
             }
             catch(Exception ex)
