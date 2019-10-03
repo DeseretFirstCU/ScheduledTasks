@@ -39,7 +39,9 @@ D:\Projects\ScheduleTasks\ScheduledTasks\bin\Newtonsoft.Json.xml
 D:\Projects\ScheduleTasks\ScheduledTasks\bin\System.Net.Http.Formatting.xml
 D:\Projects\ScheduleTasks\ScheduledTasks\bin\System.Web.Http.xml
 D:\Projects\ScheduleTasks\ScheduledTasks\bin\System.Web.Http.WebHost.xml
-D:\Projects\ScheduleTasks\ScheduledTasks\obj\Release\ScheduledTasks.csprojResolveAssemblyReference.cache
 D:\Projects\ScheduleTasks\ScheduledTasks\obj\Release\ScheduledTasks.csproj.ResolveComReference.cache
 D:\Projects\ScheduleTasks\ScheduledTasks\obj\Release\ScheduledTasks.dll
 D:\Projects\ScheduleTasks\ScheduledTasks\obj\Release\ScheduledTasks.pdb
+D:\Projects\ScheduleTasks\ScheduledTasks\obj\Release\ScheduledTasks.csprojAssemblyReference.cache
+D:\Projects\ScheduleTasks\ScheduledTasks\obj\Release\ScheduledTasks.csproj.CoreCompileInputs.cache
+D:\Projects\ScheduleTasks\ScheduledTasks\obj\Release\ScheduledTasks.csproj.CopyComplete
