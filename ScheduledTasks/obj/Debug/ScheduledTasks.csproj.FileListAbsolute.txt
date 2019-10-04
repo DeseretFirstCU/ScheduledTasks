@@ -60,7 +60,6 @@ C:\src\ScheduledTasks\ScheduledTasks\bin\roslyn\System.IO.FileSystem.Primitives.
 C:\src\ScheduledTasks\ScheduledTasks\bin\roslyn\vbc.exe.config
 C:\src\ScheduledTasks\ScheduledTasks\bin\roslyn\vbc.rsp
 C:\src\ScheduledTasks\ScheduledTasks\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Projects\ScheduleTasks\ScheduledTasks\obj\Debug\ScheduledTasks.csprojResolveAssemblyReference.cache
 D:\Projects\ScheduleTasks\ScheduledTasks\obj\Debug\ScheduledTasks.csproj.ResolveComReference.cache
 D:\Projects\ScheduleTasks\ScheduledTasks\bin\ApplicationInsights.config
 D:\Projects\ScheduleTasks\ScheduledTasks\bin\roslyn\csc.exe.config
@@ -105,3 +104,6 @@ D:\Projects\ScheduleTasks\ScheduledTasks\bin\System.Web.Http.xml
 D:\Projects\ScheduleTasks\ScheduledTasks\bin\System.Web.Http.WebHost.xml
 D:\Projects\ScheduleTasks\ScheduledTasks\obj\Debug\ScheduledTasks.dll
 D:\Projects\ScheduleTasks\ScheduledTasks\obj\Debug\ScheduledTasks.pdb
+D:\Projects\ScheduleTasks\ScheduledTasks\obj\Debug\ScheduledTasks.csprojAssemblyReference.cache
+D:\Projects\ScheduleTasks\ScheduledTasks\obj\Debug\ScheduledTasks.csproj.CoreCompileInputs.cache
+D:\Projects\ScheduleTasks\ScheduledTasks\obj\Debug\ScheduledTasks.csproj.CopyComplete
